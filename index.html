@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ich war hier</title>
+
+    <style></style>
+
+    <script>
+
+        // Variablen speichern -------------------------------------------------------------
+
+        let name; // wofür ist das gut? geht auch ohne.
+
+        function loadName1() {
+            name = localStorage.getItem('meinName');
+            document.getElementById('headline').innerHTML = `${name} war hier!`;
+        }
+
+        function saveName1() {
+            name = document.getElementById('input1').value;
+
+            document.getElementById('headline').innerHTML = `Hallo ${name}!`;
+
+            localStorage.setItem('meinName', name);
+        }
+
+        // Array speichern -------------------------------------------------------------------
+
+        let names = [];
+
+        function loadName2() {
+            names = getArray('names');
+            document.getElementById('headline').innerHTML = `${names} war hier!`;
+        }
+
+        function saveName2() {
+            let name = document.getElementById('input2').value;
+            names.push(name);
+
+            document.getElementById('headline').innerHTML = `Hallo ${names}!`;
+            localStorage.setItem('meinName', name);
+
+            saveArrayToLocalStorage('names', names);
+        }
+
+        function saveArrayToLocalStorage(key, array) {
+            localStorage.setItem(key, JSON.stringify(array));
+        }
+
+        function getArray(key) {
+            return JSON.parse(getItem('key')); // JSON.parse wandelt das, was wir aus getItem('key') kriegen in einen Array um
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Variablen speichern --------------------------------------------- -->
+    <h1 id="headline"></h1>
+    <input id="input1" type="text">
+    <button onclick="saveName1()">war hier.</button>
+
+    <button onclick="loadName1()">Wer war zuletzt hier?</button>
+
+    <!-- Array speichern ------------------------------------------------- -->
+
+    <h1 id="headline"></h1>
+    <input id="input2" type="text">
+    <button onclick="saveName2()">Hinzufügen</button>
+
+    <button onclick="loadName2()">Wer war alles hier?</button>
+
+
+</body>
+
+</html>
